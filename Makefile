@@ -5,7 +5,9 @@ SRC_DIR := src
 BUILD_DIR := build
 BIN := $(BUILD_DIR)/main
 
-SRCS := $(wildcard $(SRC_DIR)/*.cpp)
+GEMM ?= naive
+
+SRCS := $(SRC_DIR)/main.cpp $(SRC_DIR)/matrix.cpp $(SRC_DIR)/$(GEMM)_gemm.cpp
 OBJS := $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRCS))
 
 all: $(BIN)

@@ -13,5 +13,6 @@ typedef struct
 
 void init_matrix(Matrix* m, int rows, int columns);
 void init_matrix_with_data(Matrix* m, int rows, int columns, double* data);
+void init_random_matrix(Matrix* m, int rows, int columns);
 
 void print_matrix(Matrix* m);

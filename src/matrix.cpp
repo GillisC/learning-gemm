@@ -1,6 +1,8 @@
 #include "matrix.h"
 
+#include <cstddef>
 #include <iostream>
+#include <random>
 
 size_t padded_cols(size_t cols, size_t element_size, size_t align_bytes)
 {
@@ -45,6 +47,23 @@ void init_matrix_with_data(Matrix* m, int rows, int columns, double* data)
             m->data[i * m->stride + j] = data[i * columns + j];
         }
     }
+}
+
+void init_random_matrix(Matrix* m, int rows, int columns)
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<double> dist(0.0, 1.0);
+
+    size_t n = rows * columns;
+    std::vector<double> random_data(n);
+
+    for (size_t i = 0; i < n; ++i)
+    {
+        random_data[i] = dist(gen);
+    }
+
+    init_matrix_with_data(m, rows, columns, random_data.data());
 }
 
 void print_matrix(Matrix* m)
