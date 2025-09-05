@@ -24,7 +24,6 @@ void init_matrix(Matrix* m, int rows, int columns)
     else
     {
         size_t stride = padded_cols(columns, sizeof(double), alignment_factor);
-        std::cout << stride << "\n";
         total_bytes = (rows * stride) * sizeof(double);
         m->data = (double*) (aligned_alloc(alignment_factor, total_bytes));
         m->stride = stride;
@@ -45,5 +44,18 @@ void init_matrix_with_data(Matrix* m, int rows, int columns, double* data)
         {
             m->data[i * m->stride + j] = data[i * columns + j];
         }
+    }
+}
+
+void print_matrix(Matrix* m)
+{
+    std::cout << "\n";
+    for (int i = 0; i < m->rows; ++i)
+    {
+        for (int j = 0; j < m->columns; ++j)
+        {
+            std::cout << m->data[i * m->stride + j] << " ";
+        }
+        std::cout << "\n";
     }
 }
