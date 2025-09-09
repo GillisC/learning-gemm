@@ -20,14 +20,36 @@ void init_matrix(Matrix* m, int rows, int columns)
     if ((columns * sizeof(double)) % alignment_factor == 0)
     {
         total_bytes = (rows * columns) * sizeof(double);
+
+        if (total_bytes % alignment_factor != 0)
+        {
+            total_bytes += alignment_factor - (total_bytes % alignment_factor);
+        }
+
         m->data = (double*) (aligned_alloc(alignment_factor, total_bytes));
+        if (m->data == NULL)
+        {
+            std::cerr << "Memory allocation failed" << std::endl;
+            exit(1);
+        }
         m->stride = columns;
     }
     else
     {
         size_t stride = padded_cols(columns, sizeof(double), alignment_factor);
         total_bytes = (rows * stride) * sizeof(double);
+
+        if (total_bytes % alignment_factor != 0)
+        {
+            total_bytes += alignment_factor - (total_bytes % alignment_factor);
+        }
+
         m->data = (double*) (aligned_alloc(alignment_factor, total_bytes));
+        if (m->data == NULL)
+        {
+            std::cerr << "Memory allocation failed" << std::endl;
+            exit(1);
+        }
         m->stride = stride;
     }
 
@@ -55,15 +77,15 @@ void init_random_matrix(Matrix* m, int rows, int columns)
     std::mt19937 gen(rd());
     std::uniform_real_distribution<double> dist(0.0, 1.0);
 
-    size_t n = rows * columns;
-    std::vector<double> random_data(n);
+    init_matrix(m, rows, columns);
 
-    for (size_t i = 0; i < n; ++i)
+    for (int i = 0; i < rows; ++i)
     {
-        random_data[i] = dist(gen);
+        for (int j = 0; j < columns; ++j)
+        {
+            m->data[i * m->stride + j] = dist(gen);
+        }
     }
-
-    init_matrix_with_data(m, rows, columns, random_data.data());
 }
 
 void print_matrix(Matrix* m)

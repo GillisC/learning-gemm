@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 
 #include "gemm.h"
@@ -5,34 +6,27 @@
 void gemm(const int M, const int N, const int K, const double *A, const int lda,
           const double *B, const int ldb, double *C, const int ldc)
 {
-    int block_size = 32;
-    int total = block_size * block_size + 2 * (block_size * K);
-    std::cout << "Memory needed for each block: " << total << "\n";
+    int block_size = 16;
+    // int total = block_size * block_size + 2 * (block_size * K);
+    // std::cout << "Memory needed for each block: " << total << "\n";
 
-    int block_i, block_j;
-
-    block_i = M / block_size;
-    block_j = N / block_size;
-
-    std::cout << "rows of blocks: " << block_i
-              << ", cols of blocks: " << block_j << std::endl;
-
-    for (int ii = 0; ii < block_i; ii += block_size)
+    for (int ii = 0; ii < M; ii += block_size)
     {
-        for (int jj = 0; jj < block_j; jj += block_size)
+        for (int jj = 0; jj < N; jj += block_size)
         {
-            int block_00 = ii * block_i * block_size + jj * block_size;
-            for (int i = 0; i < block_size; i++)
+            for (int kk = 0; kk < K; kk += block_size)
             {
-                for (int j = 0; j < block_size; j++)
+                for (int i = ii; i < std::min(ii + block_size, M); i++)
                 {
-                    double sum = 0.0;
-                    for (int k = 0; k < K; k++)
+                    for (int j = jj; j < std::min(jj + block_size, N); j++)
                     {
-                        sum += A[block_00 + i * lda + k] *
-                               B[block_00 + k * ldb + j];
+                        double sum = C[i * ldc + j];
+                        for (int k = kk; k < std::min(kk + block_size, K); k++)
+                        {
+                            sum += A[i * lda + k] * B[k * ldb + j];
+                        }
+                        C[i * ldc + j] = sum;
                     }
-                    C[block_00 + i * ldc + j] = sum;
                 }
             }
         }

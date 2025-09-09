@@ -43,29 +43,31 @@ std::unordered_map<std::string, std::chrono::high_resolution_clock::time_point>
 
 int main()
 {
-    Matrix a_t;
-    Matrix b_t;
-    Matrix c_t;
-
-    int m = 2;
-    int n = 2;
-    int k = 2;
-
-    double a_data[] = {1.0, 2.0, 3.0, 4.0};
-    double b_data[] = {1.0, 2.0, 3.0, 4.0};
-
-    init_matrix_with_data(&a_t, m, k, a_data);
-    init_matrix_with_data(&b_t, k, n, b_data);
-    init_matrix(&c_t, m, n);
-
-    print_matrix(&a_t);
+    // Matrix a_t;
+    // Matrix b_t;
+    // Matrix c_t;
+    //
+    // int m = 2;
+    // int n = 2;
+    // int k = 2;
+    //
+    // double a_data[] = {1.0, 2.0, 3.0, 4.0};
+    // double b_data[] = {1.0, 2.0, 3.0, 4.0};
+    //
+    // init_matrix_with_data(&a_t, m, k, a_data);
+    // init_matrix_with_data(&b_t, k, n, b_data);
+    // init_matrix(&c_t, m, n);
+    //
+    // gemm_wrapper(&a_t, &b_t, &c_t);
+    //
+    // print_matrix(&c_t);
 
     Matrix a;
     Matrix b;
     Matrix c;
 
-    int M = 1024;
     int N = 1024;
+    int M = 1024;
     int K = 1024;
 
     init_random_matrix(&a, M, K);
@@ -76,7 +78,6 @@ int main()
     Timer::begin_timing("gemm");
     gemm_wrapper(&a, &b, &c);
     Timer::end_timing("gemm");
-    print_matrix(&c);
 
     return 0;
 }

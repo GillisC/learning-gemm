@@ -1,5 +1,5 @@
 CXX := g++
-CXXFLAGS := -Wall -Wextra -std=c++17 -Iinclude
+CXXFLAGS := -Wall -Wextra -std=c++17 -Iinclude -O3 -march=native
 
 SRC_DIR := src
 BUILD_DIR := build
@@ -13,6 +13,12 @@ OBJS := $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRCS))
 all: $(BIN)
 	@$(BIN)
 
+naive:
+	$(MAKE) GEMM=naive
+
+blocked:
+	$(MAKE) GEMM=blocked
+	
 $(BIN): $(OBJS)
 	$(CXX) $(OBJS) -o $@
 
