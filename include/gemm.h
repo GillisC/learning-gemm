@@ -15,14 +15,18 @@
  * @param ldb the leading dimension in B
  * @param C output matrix
  * @param ldc the leading dimension in C
+ * @param alpha scales the result of AB
+ * @param beta allows the reuse of data already present in C
  *
  * @note due to memory alignment the ld(a,b,c) is used to find next row of
  * data
  */
 void gemm(const int M, const int N, const int K, const double* A, int lda,
-          const double* B, int ldb, double* C, int ldc);
+          const double* B, int ldb, double* C, int ldc, const double alpha,
+          const double beta);
 
-inline void gemm_wrapper(const Matrix* A, const Matrix* B, Matrix* C)
+inline void gemm_wrapper(const Matrix* A, const Matrix* B, Matrix* C,
+                         const double alpha = 1.0, const double beta = 0.0)
 {
     if (A->columns != B->rows || A->rows != C->rows || B->columns != C->columns)
     {
@@ -30,5 +34,5 @@ inline void gemm_wrapper(const Matrix* A, const Matrix* B, Matrix* C)
     }
 
     gemm(A->rows, B->columns, A->columns, A->data, A->stride, B->data,
-         B->stride, C->data, C->stride);
+         B->stride, C->data, C->stride, alpha, beta);
 }

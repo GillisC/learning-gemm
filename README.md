@@ -15,7 +15,7 @@ Where:
 $\alpha$ scales the result of $A \cdot B$:
 - if $\alpha = 1$, nothing changes. 
 - if $\alpha = 2$, the result is doubled. 
-- if $\alpha = 1$, the result is halfed. 
+- if $\alpha = 0.5$, the result is halfed. 
 
 The following variables describe the dimensions of the matrices:
 - $M$: The number of rows in $A$.

@@ -45,17 +45,17 @@ int main()
 {
     // Matrix a_t;
     // Matrix b_t;
-    // Matrix c_t;
     //
-    // int m = 2;
-    // int n = 2;
-    // int k = 2;
-    //
-    // double a_data[] = {1.0, 2.0, 3.0, 4.0};
-    // double b_data[] = {1.0, 2.0, 3.0, 4.0};
+    // int m = 3;
+    // int k = 3;
+    // double a_data[] = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0};
     //
     // init_matrix_with_data(&a_t, m, k, a_data);
-    // init_matrix_with_data(&b_t, k, n, b_data);
+    // init_matrix(&b_t, 3, 3);
+    // print_matrix(&a_t);
+    //
+    // transpose(&a_t, &b_t);
+    // print_matrix(&b_t);
     // init_matrix(&c_t, m, n);
     //
     // gemm_wrapper(&a_t, &b_t, &c_t);
@@ -76,7 +76,7 @@ int main()
     init_matrix(&c, M, N);
 
     Timer::begin_timing("gemm");
-    gemm_wrapper(&a, &b, &c);
+    gemm_wrapper(&a, &b, &c, 1.0, 0.0);
     Timer::end_timing("gemm");
 
     return 0;

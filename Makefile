@@ -18,6 +18,9 @@ naive:
 
 blocked:
 	$(MAKE) GEMM=blocked
+
+avx:
+	$(MAKE) GEMM=avx
 	
 $(BIN): $(OBJS)
 	$(CXX) $(OBJS) -o $@

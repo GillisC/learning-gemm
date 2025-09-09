@@ -88,6 +88,27 @@ void init_random_matrix(Matrix* m, int rows, int columns)
     }
 }
 
+void transpose(Matrix* a, Matrix* b)
+{
+    int M = a->rows;
+    int N = a->columns;
+    int block_size = 8;
+
+    for (int ii = 0; ii < M; ii += block_size)
+    {
+        for (int jj = 0; jj < N; jj += block_size)
+        {
+            for (int i = ii; i < std::min(ii + block_size, M); ++i)
+            {
+                for (int j = jj; j < std::min(jj + block_size, N); ++j)
+                {
+                    b->data[j * b->stride + i] = a->data[i * a->stride + j];
+                }
+            }
+        }
+    }
+}
+
 void print_matrix(Matrix* m)
 {
     std::cout << "\n";
