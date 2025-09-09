@@ -6,7 +6,7 @@
 void gemm(const int M, const int N, const int K, const double *A, const int lda,
           const double *B, const int ldb, double *C, const int ldc)
 {
-    int block_size = 16;
+    int block_size = 4;
     // int total = block_size * block_size + 2 * (block_size * K);
     // std::cout << "Memory needed for each block: " << total << "\n";
 

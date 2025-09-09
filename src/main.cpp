@@ -66,9 +66,9 @@ int main()
     Matrix b;
     Matrix c;
 
-    int N = 1024;
-    int M = 1024;
-    int K = 1024;
+    int N = 2048;
+    int M = 2048;
+    int K = 2048;
 
     init_random_matrix(&a, M, K);
     init_random_matrix(&b, K, N);
