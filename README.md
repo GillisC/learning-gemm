@@ -4,7 +4,7 @@ GEMM is a algorithm to perform matrix multiplication. This repository aims to ex
 ## Goal
 The goal is to compute the following:
 ```math
-C /leftarrow /alpha /A /B + /beta /C
+C \leftarrow \alpha AB  + \beta C
 ```
 
 ## Implementations
